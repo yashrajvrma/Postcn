@@ -31,11 +31,9 @@ export default function Page() {
               <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
             </div> */}
             <ResizablePanelGroup direction="horizontal">
-              <ResizablePanel minSize={60} defaultSize={70}>
-                One
-              </ResizablePanel>
+              <ResizablePanel defaultSize={80}>One</ResizablePanel>
               <ResizableHandle />
-              <ResizablePanel defaultSize={30} minSize={7} maxSize={40}>
+              <ResizablePanel defaultSize={20} minSize={4} maxSize={30}>
                 <div>hello</div>
               </ResizablePanel>
             </ResizablePanelGroup>
