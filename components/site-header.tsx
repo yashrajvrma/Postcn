@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { SidebarIcon } from "lucide-react"
+import { Command, SidebarIcon } from "lucide-react";
 
-import { SearchForm } from "@/components/search-form"
+import { SearchForm } from "@/components/search-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,26 +10,37 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { useSidebar } from "@/components/ui/sidebar"
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export function SiteHeader() {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar } = useSidebar();
 
   return (
     <header className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
-      <div className="flex h-(--header-height) w-full items-center gap-2 px-4">
-        <Button
+      <div className="flex h-(--header-height) w-full items-center gap-2 px-2">
+        <div>
+          <a className="flex space-x-2" href="#">
+            <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+              <Command className="size-4" />
+            </div>
+            <div className="flex items-center text-left text-sm leading-tight">
+              <span className="truncate font-medium">Promptman</span>
+              {/* <span className="truncate text-xs">Enterprise</span> */}
+            </div>
+          </a>
+        </div>
+        {/* <Button
           className="h-8 w-8"
           variant="ghost"
           size="icon"
           onClick={toggleSidebar}
         >
           <SidebarIcon />
-        </Button>
-        <Separator orientation="vertical" className="mr-2 h-4" />
+        </Button> */}
+        {/* <Separator orientation="vertical" className="mr-2 h-4" />
         <Breadcrumb className="hidden sm:block">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -42,9 +53,9 @@ export function SiteHeader() {
               <BreadcrumbPage>Data Fetching</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
-        </Breadcrumb>
-        <SearchForm className="w-full sm:ml-auto sm:w-auto" />
+        </Breadcrumb> */}
+        {/* <SearchForm className="w-full sm:ml-auto sm:w-auto" /> */}
       </div>
     </header>
-  )
+  );
 }
