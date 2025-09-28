@@ -1,5 +1,3 @@
-"use client";
-
 import { Command, SidebarIcon } from "lucide-react";
 
 import { SearchForm } from "@/components/search-form";
@@ -15,9 +13,20 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
 import { NavUser } from "./nav-user";
+import { auth } from "@/lib/auth/auth-server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export function SiteHeader() {
-  const { toggleSidebar } = useSidebar();
+export const SiteHeader = async () => {
+  // const { toggleSidebar } = useSidebar();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/sign-in");
+  }
 
   return (
     <header className="bg-background sticky top-0 z-50 flex w-full items-center border-b">
@@ -36,9 +45,9 @@ export function SiteHeader() {
         <div>
           <NavUser
             user={{
-              name: "shadcn",
-              email: "m@example.com",
-              avatar: "/avatars/shadcn.jpg",
+              name: session?.user.name!,
+              email: session?.user.email!,
+              avatar: session?.user.image!,
             }}
           />
         </div>
@@ -68,4 +77,4 @@ export function SiteHeader() {
       </div>
     </header>
   );
-}
+};

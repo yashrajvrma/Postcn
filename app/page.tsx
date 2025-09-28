@@ -9,15 +9,7 @@ import { redirect } from "next/navigation";
 
 // export const description = "A sidebar with a header and a search form.";
 
-export default async function Page() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) {
-    redirect("/sign-in");
-  }
-
+export default function Page() {
   return (
     <div className="[--header-height:calc(--spacing(14))]">
       <SidebarProvider className="flex flex-col">
