@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Promptman",
-  description: "Create API's by just text prompt with Promptman",
+  title: "Postcn",
+  description: "Create API's by just text prompt with Postcn",
 };
 
 export default function RootLayout({

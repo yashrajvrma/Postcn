@@ -28,7 +28,7 @@ export function SiteHeader() {
               <Command className="size-4" />
             </div>
             <div className="flex items-center text-left text-sm leading-tight">
-              <span className="truncate font-medium">Promptman</span>
+              <span className="truncate font-medium">Postcn</span>
               {/* <span className="truncate text-xs">Enterprise</span> */}
             </div>
           </a>
