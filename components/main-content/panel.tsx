@@ -5,6 +5,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "../ui/resizable";
+import ResponsePanel from "../response/response-panel";
 
 export default function Panel() {
   return (
@@ -50,9 +51,10 @@ export default function Panel() {
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel defaultSize={45} maxSize={80} minSize={12}>
-              <div className="flex items-center justify-center p-6">
+              {/* <div className="flex items-center justify-center p-6">
                 <span className="font-semibold">two</span>
-              </div>
+              </div> */}
+              <ResponsePanel />
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
