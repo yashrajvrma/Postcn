@@ -1,8 +1,7 @@
-"use client";
-
 import { Clipboard, Copy } from "lucide-react";
 import CodeEditor from "./code-mirror";
 import { Button } from "../ui/button";
+import { CopyButton } from "../ui/shadcn-io/copy-button";
 
 export default function ResponseCode() {
   const responseContent = `{
@@ -15,26 +14,19 @@ export default function ResponseCode() {
     "message": "Login successful"
 }`;
 
-  const handleCopy = async (code: string) => {
-    try {
-      await navigator.clipboard.writeText(code);
-      console.log("code copied to clipboard!");
-    } catch (err) {
-      console.error("Failed to copy code: ", err);
-    }
-  };
   return (
     <div>
       <div className="flex justify-between w-full">
-        <div>JSON</div>
+        <div className="text-sm">JSON</div>
         <div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => handleCopy(responseContent)}
-          >
+          {/* <Button variant="ghost" size="icon">
             <Copy className="h-4 w-4" />
-          </Button>
+          </Button> */}
+          <CopyButton
+            className="text-foreground bg-transparent hover:bg-accent"
+            content={responseContent}
+            size="default"
+          />
         </div>
       </div>
       <CodeEditor content={responseContent} />
