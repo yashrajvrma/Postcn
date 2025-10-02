@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ResponseCode from "../code/response-code";
 
 export default function ResponsePanel() {
   return (
@@ -14,7 +15,9 @@ export default function ResponsePanel() {
           <TabsTrigger value="responseTime">700ms</TabsTrigger>
         </div>
       </TabsList>
-      <TabsContent value="body">Make changes to your body here.</TabsContent>
+      <TabsContent value="body">
+        <ResponseCode />
+      </TabsContent>
       <TabsContent value="cookies">Cookies here</TabsContent>
       <TabsContent value="headers">Headers here</TabsContent>
     </Tabs>
