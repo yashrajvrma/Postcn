@@ -1,33 +1,22 @@
-// @ts-nocheck
-
 "use client";
 
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
-import { EditorView, EditorState } from "@codemirror/view";
-// import * as themes from "@uiw/codemirror-themes-all";
 import { useState, useEffect, useCallback, useRef } from "react";
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
+import { EditorView } from "@codemirror/view";
 import { xcodeDark, xcodeLight } from "@uiw/codemirror-theme-xcode";
-export * from "@uiw/codemirror-theme-xcode";
 
-const languageExtensions = {
-  js: javascript(),
-};
-
-const getLanguageExtension = (filename: string) => {
-  //   const extension = filename.split(".").pop();
-  //   return languageExtensions[extension || ""] || javascript();
-  return javascript();
-};
-
-const CodeEditor = ({ filename = "example.js", content }) => {
+const CodeEditor = ({ content }: { content: string }) => {
   const [value, setValue] = useState(content);
   const editorRef = useRef(null);
 
   useEffect(() => {
+    // @ts-ignore
     if (editorRef.current?.view) {
+      // @ts-ignore
       const currentValue = editorRef.current.view.state.doc.toString();
       if (currentValue !== content) {
+        // @ts-ignore
         editorRef.current.view.dispatch({
           changes: { from: 0, to: currentValue.length, insert: content },
         });
@@ -36,16 +25,13 @@ const CodeEditor = ({ filename = "example.js", content }) => {
     }
   }, [content]);
 
-  const handleChange = (val) => setValue(val);
-
   return (
     <CodeMirror
       ref={editorRef}
       value={value}
-      extensions={[getLanguageExtension(filename), EditorView.lineWrapping]}
+      extensions={[json(), EditorView.lineWrapping]}
       theme={xcodeLight}
-      onChange={handleChange}
-      height="600px"
+      // height="600px"
       editable={false}
     />
   );
