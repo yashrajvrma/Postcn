@@ -1,7 +1,7 @@
 import { Clipboard, Copy } from "lucide-react";
 import CodeEditor from "./code-mirror";
 import { Button } from "../ui/button";
-import { CopyButton } from "../ui/shadcn-io/copy-button";
+import { CopyButton } from "../copy-button";
 
 export default function ResponseCode() {
   const responseContent = `{
