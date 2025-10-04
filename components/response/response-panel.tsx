@@ -4,7 +4,7 @@ import CodeEditor from "../code/code-mirror";
 
 export default function ResponsePanel() {
   return (
-    <Tabs defaultValue="account" className="w-full">
+    <Tabs defaultValue="account" className="w-full p-2">
       <TabsList className="flex justify-between w-full">
         <div>
           <TabsTrigger value="body">Body</TabsTrigger>
