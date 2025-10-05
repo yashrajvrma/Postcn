@@ -19,9 +19,6 @@ export default function ResponseCode() {
       <div className="flex justify-between w-full">
         <div className="text-sm">JSON</div>
         <div>
-          {/* <Button variant="ghost" size="icon">
-            <Copy className="h-4 w-4" />
-          </Button> */}
           <CopyButton
             className="text-foreground bg-transparent hover:bg-accent"
             content={responseContent}

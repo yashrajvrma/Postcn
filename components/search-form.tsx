@@ -8,13 +8,6 @@ import CreateNewCollection from "./collection/create-new-collection";
 export function SearchForm({ ...props }: React.ComponentProps<"form">) {
   return (
     <div className="flex gap-x-1 items-center">
-      {/* <Button
-        size="sm"
-        variant="ghost"
-        className="h-8 w-8 hover:bg-primary-foreground"
-      >
-        <Plus strokeWidth={2} className="w-5 h-5 text-muted-foreground" />
-      </Button> */}
       <CreateNewCollection />
 
       <form {...props}>

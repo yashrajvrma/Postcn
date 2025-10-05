@@ -7,7 +7,9 @@ export async function POST(request: Request) {
     console.log("collection name is", name);
 
     if (!name) {
-      throw new Error("Collection name is required");
+      return new Response("Collection name is required", {
+        status: 400,
+      });
     }
 
     const collection = await prisma.collection.create({
@@ -16,7 +18,10 @@ export async function POST(request: Request) {
       },
     });
 
-    return Response.json(collection);
+    return Response.json({
+      message: "Collection created successfully",
+      collection,
+    });
   } catch (error) {
     console.error("Error is", error);
 

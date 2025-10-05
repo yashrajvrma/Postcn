@@ -17,32 +17,36 @@ import { Label } from "@/components/ui/label";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { Spinner } from "../spinner";
+import toast from "react-hot-toast";
 
-const createCollection = async (name: string) => {
-  console.log("name in client is ", name);
-  const response = await axios.post("/api/collection/create", { name });
-  return response.data;
+const CreateNewCollectionFn = (name: string) => {
+  return axios.post("/api/collection/create", { name });
 };
 
 export default function CreateNewCollection() {
   const [open, setOpen] = useState(false);
-  const mutation = useMutation({
-    mutationFn: (name: string) => createCollection(name),
-    onSuccess: () => {
-      console.log("✅ Collection created successfully!");
+
+  const { mutate: createNewCollection, isPending } = useMutation({
+    mutationFn: CreateNewCollectionFn,
+    onSuccess: (data) => {
+      console.log("data is", JSON.stringify(data));
+      toast.success(`${data.data.message}`);
       setOpen(false);
     },
-    onError: (error) => {
-      console.error("❌ Error creating collection:", error);
+    onError: (error: any) => {
+      toast.error(`${error.response.data}`);
+      console.error("Error creating collection:", error);
+      setOpen(false);
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const name = formData.get("collectionName") as string;
     if (!name.trim()) return;
-    mutation.mutate(name);
+    createNewCollection(name);
   };
 
   return (
@@ -81,8 +85,15 @@ export default function CreateNewCollection() {
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending ? "Creating..." : "Create"}
+            <Button type="submit" disabled={isPending}>
+              {isPending ? (
+                <div className="flex justify-center items-center align-middle gap-x-2">
+                  Create
+                  <Spinner className="w-5 h-5" variant="default" />
+                </div>
+              ) : (
+                "Create"
+              )}
             </Button>
           </DialogFooter>
         </form>
