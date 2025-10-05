@@ -22,7 +22,7 @@ export default function Panel() {
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel
-            className="sm:min-h-10"
+            className="sm:min-h-9"
             defaultSize={45}
             maxSize={80}
             // minSize={4}

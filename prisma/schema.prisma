@@ -13,6 +13,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum FileType {
+  FOLDER
+  FILE
+}
+
 model User {
   id String @id @default(uuid())
 
@@ -79,4 +84,37 @@ model Verification {
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+model Collection {
+  id String @id @default(uuid())
+
+  name     String
+  isActive Boolean @default(true)
+
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now()) @updatedAt
+  FilesAndFolder FilesAndFolder[]
+
+  @@map("collection")
+}
+
+model FilesAndFolder {
+  id String @id @default(ulid())
+
+  name String
+  type FileType
+
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id])
+
+  parentId String?
+  parent   FilesAndFolder? @relation("FolderChildren", fields: [parentId], references: [id])
+
+  children FilesAndFolder[] @relation("FolderChildren")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("file_and_folder")
 }
