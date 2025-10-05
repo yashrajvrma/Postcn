@@ -4,8 +4,8 @@ import CodeEditor from "../code/code-mirror";
 
 export default function ResponsePanel() {
   return (
-    <Tabs defaultValue="account" className="w-full p-2">
-      <TabsList className="flex justify-between w-full">
+    <Tabs defaultValue="account" className="w-full">
+      <TabsList className="flex justify-between w-full p-1">
         <div>
           <TabsTrigger value="body">Body</TabsTrigger>
           <TabsTrigger value="cookies">Cookies</TabsTrigger>
@@ -16,11 +16,13 @@ export default function ResponsePanel() {
           <TabsTrigger value="responseTime">700ms</TabsTrigger>
         </div>
       </TabsList>
-      <TabsContent value="body">
-        <ResponseCode />
-      </TabsContent>
-      <TabsContent value="cookies">Cookies here</TabsContent>
-      <TabsContent value="headers">Headers here</TabsContent>
+      <div className="p-1">
+        <TabsContent value="body">
+          <ResponseCode />
+        </TabsContent>
+        <TabsContent value="cookies">Cookies here</TabsContent>
+        <TabsContent value="headers">Headers here</TabsContent>
+      </div>
     </Tabs>
   );
 }

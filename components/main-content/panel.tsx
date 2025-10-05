@@ -21,7 +21,12 @@ export default function Panel() {
             </div>
           </ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel defaultSize={45} maxSize={80} minSize={4}>
+          <ResizablePanel
+            className="sm:min-h-10"
+            defaultSize={45}
+            maxSize={80}
+            // minSize={4}
+          >
             <ResponsePanel />
           </ResizablePanel>
         </ResizablePanelGroup>
@@ -29,9 +34,9 @@ export default function Panel() {
       <ResizableHandle />
       <ResizablePanel
         defaultSize={20}
-        minSize={2.5}
+        // minSize={2.5}
         maxSize={30}
-        className="h-full"
+        className="h-full sm:min-w-10"
       >
         <Tabs defaultValue="account" className="flex flex-row gap-x-2 h-full">
           <div className="flex">
