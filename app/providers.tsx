@@ -18,15 +18,18 @@ const QueryClientContextProvider = ({
 const ToastProvider = () => {
   return (
     <Toaster
-      position="bottom-right"
-      toastOptions={{
-        // className: "font-mono",
-        style: {
-          background: "hsl(var(--background))",
-          color: "hsl(var(--foreground))",
-          border: "1px solid hsl(var(--border))",
-        },
-      }}
+      position="top-center"
+      toastOptions={
+        {
+          // className: "font-mono",
+          // className: "z-10",
+          // style: {
+          //   background: "hsl(var(--background))",
+          //   color: "hsl(var(--foreground))",
+          //   border: "1px solid hsl(var(--border))",
+          // },
+        }
+      }
     />
   );
 };
