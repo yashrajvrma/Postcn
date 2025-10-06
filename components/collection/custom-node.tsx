@@ -1,6 +1,20 @@
 import React, { useState } from "react";
-import { ChevronRight, Check, X, Edit3 } from "lucide-react";
+import { ChevronRight, Check, X, Edit3, Ellipsis } from "lucide-react";
 import { NodeModel, useDragOver } from "@minoru/react-dnd-treeview";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 // import { CustomData } from "./types";
 
 type Props = {
@@ -44,7 +58,7 @@ export const CustomNode: React.FC<Props> = ({
 
   return (
     <div
-      className="flex items-center h-8 pr-2 select-none cursor-pointer"
+      className="flex items-center h-8 select-none cursor-pointer ml-1.5"
       style={{ paddingInlineStart: indent }}
       {...dragOverProps}
       onClick={handleToggle}
@@ -52,19 +66,19 @@ export const CustomNode: React.FC<Props> = ({
       {droppable && (
         <div
           //   onClick={handleToggle}
-          className={`flex items-center justify-center w-6 h-6  transition-transform duration-100 ${
+          className={`flex items-center justify-center w-6 h-6  transition-transform duration-100 text-muted-foreground ${
             isOpen ? "rotate-90" : "rotate-0"
           }`}
         >
-          <ChevronRight size={16} />
+          <ChevronRight strokeWidth={2} className="w-4 h-4" />
         </div>
       )}
 
-      <div className="flex items-center gap-2 pl-2">
+      <div className="flex items-center gap-2 pl-2 w-full">
         {visibleInput ? (
           <div className="flex items-center gap-1">
             <input
-              className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-48"
+              className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-40"
               value={labelText}
               onChange={handleChangeText}
               autoFocus
@@ -74,18 +88,18 @@ export const CustomNode: React.FC<Props> = ({
               onClick={handleSubmit}
               disabled={labelText.trim() === ""}
             >
-              <Check size={16} />
+              <Check className="w-5 h-5" strokeWidth={2} />
             </button>
             <button
               className="p-1 text-red-500 hover:bg-red-100 rounded-md"
               onClick={handleCancel}
             >
-              <X size={16} />
+              <X className="w-4 h-5" strokeWidth={2} />
             </button>
           </div>
         ) : (
-          <div className="flex items-center gap-1">
-            <div className="group text-sm text-gray-800 pr-2">
+          <div className="flex justify-between bg-green-100 w-full">
+            <div className="flex group text-sm text-gray-800">
               {text}
               <button
                 className="invisible group-hover:visible pl-3 text-gray-600 hover:bg-gray-100 rounded-md"
@@ -94,6 +108,22 @@ export const CustomNode: React.FC<Props> = ({
                 <Edit3 className="h-3 w-3" />
               </button>
             </div>
+            {/* <button className="invisible group-hover:visible text-gray-600 hover:bg-gray-100 rounded-md">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Ellipsis strokeWidth={2} className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-40" align="start">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>Add Request</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleShowInput}>
+                      Rename
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </button> */}
           </div>
         )}
       </div>

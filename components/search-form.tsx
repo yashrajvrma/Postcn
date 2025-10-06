@@ -15,8 +15,8 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
         <div
           className="relative"
           onClick={() =>
-            toast("Bro I'm a fox not AI, Wait for some time", {
-              icon: "🦊",
+            toast("Coding hard to make it live", {
+              icon: "😓",
             })
           }
         >
@@ -25,7 +25,7 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
           </Label>
           <SidebarInput
             id="search"
-            placeholder="Type to search..."
+            placeholder="Search collections"
             className="h-8 pl-7"
             disabled
           />
