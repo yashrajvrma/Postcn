@@ -123,15 +123,15 @@ export default function FileTree() {
           onDrop={handleDrop}
           sort={false}
           render={(node, { depth, isOpen, onToggle }) => (
-            <div className="hover:bg-accent px-2">
-              <CustomNode
-                node={node}
-                depth={depth}
-                isOpen={isOpen}
-                onToggle={onToggle}
-                onTextChange={handleTextChange}
-              />
-            </div>
+            // <div className="hover:bg-accent px-2">
+            <CustomNode
+              node={node}
+              depth={depth}
+              isOpen={isOpen}
+              onToggle={onToggle}
+              onTextChange={handleTextChange}
+            />
+            // </div>
           )}
         />
       </div>

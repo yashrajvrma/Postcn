@@ -1,10 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ResponseCode from "../code/response-code";
-import CodeEditor from "../code/code-mirror";
 
 export default function ResponsePanel() {
   return (
-    <Tabs defaultValue="account" className="w-full">
+    <Tabs defaultValue="body" className="w-full">
       <TabsList className="flex justify-between w-full p-1">
         <div>
           <TabsTrigger value="body">Body</TabsTrigger>

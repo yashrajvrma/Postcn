@@ -15,6 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
 // import { CustomData } from "./types";
 
 type Props = {
@@ -32,6 +33,8 @@ export const CustomNode: React.FC<Props> = ({
   onToggle,
   onTextChange,
 }) => {
+  const [hover, setHover] = useState<boolean>(false);
+
   const { id, text, droppable } = node;
   const [visibleInput, setVisibleInput] = useState(false);
   const [labelText, setLabelText] = useState(text);
@@ -62,6 +65,8 @@ export const CustomNode: React.FC<Props> = ({
       style={{ paddingInlineStart: indent }}
       {...dragOverProps}
       onClick={handleToggle}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       {droppable && (
         <div
@@ -99,31 +104,37 @@ export const CustomNode: React.FC<Props> = ({
           </div>
         ) : (
           <div className="flex justify-between bg-green-100 w-full">
-            <div className="flex group text-sm text-gray-800">
+            <div className="flex text-sm text-gray-800">
               {text}
-              <button
-                className="invisible group-hover:visible pl-3 text-gray-600 hover:bg-gray-100 rounded-md"
-                onClick={handleShowInput}
-              >
-                <Edit3 className="h-3 w-3" />
-              </button>
+              {/* {hover && (
+                <button
+                  className="pl-3 text-gray-600 hover:bg-gray-100 rounded-md"
+                  onClick={handleShowInput}
+                >
+                  <Edit3 className="h-3 w-3" />
+                </button>
+              )} */}
+              {hover && (
+                // <button className="text-gray-600 hover:bg-gray-100 rounded-md">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="default">
+                      <Ellipsis strokeWidth={2} className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-40" align="start">
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>Add Request</DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleShowInput}>
+                        Rename
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>Delete</DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                // </button>
+              )}
             </div>
-            {/* <button className="invisible group-hover:visible text-gray-600 hover:bg-gray-100 rounded-md">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Ellipsis strokeWidth={2} className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-40" align="start">
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem>Add Request</DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleShowInput}>
-                      Rename
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </button> */}
           </div>
         )}
       </div>
