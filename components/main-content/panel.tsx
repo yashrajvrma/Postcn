@@ -5,7 +5,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "../ui/resizable";
-import ResponsePanel from "../response/response-panel";
+import ResponsePanel from "./response-panel";
+import RightPanel from "./right-panel";
 
 export default function Panel() {
   return (
@@ -35,30 +36,10 @@ export default function Panel() {
       <ResizablePanel
         defaultSize={20}
         // minSize={2.5}
-        maxSize={30}
+        maxSize={40}
         className="h-full sm:min-w-10"
       >
-        <Tabs defaultValue="account" className="flex flex-row gap-x-2 h-full">
-          <div className="flex">
-            <TabsList className="flex flex-col h-14 w-10">
-              <TabsTrigger value="account">
-                <CodeXml />
-              </TabsTrigger>
-              <TabsTrigger value="password">
-                <Bot />
-              </TabsTrigger>
-            </TabsList>
-          </div>
-
-          <div>
-            <TabsContent value="account">
-              Make changes to your account here.
-            </TabsContent>
-            <TabsContent value="password">
-              Change your password here.
-            </TabsContent>
-          </div>
-        </Tabs>
+        <RightPanel />
       </ResizablePanel>
     </ResizablePanelGroup>
   );
