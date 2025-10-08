@@ -16,7 +16,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { unknown } from "better-auth";
 
 type Props = {
   node: NodeModel;
@@ -38,7 +37,7 @@ export const CustomNode: React.FC<Props> = ({
   const [hover, setHover] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { id, text, droppable } = node;
+  const { id, text, data } = node;
   const [visibleInput, setVisibleInput] = useState(false);
   const [labelText, setLabelText] = useState(text);
   const indent = depth * 24;
@@ -76,7 +75,7 @@ export const CustomNode: React.FC<Props> = ({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {droppable && (
+      {data.type === "FOLDER" && (
         <div
           onClick={handleToggle}
           className={`flex items-center justify-center w-6 h-6 transition-transform duration-100 text-muted-foreground ml-3.5 ${
@@ -86,7 +85,6 @@ export const CustomNode: React.FC<Props> = ({
           <ChevronRight strokeWidth={2} className="w-4 h-4" />
         </div>
       )}
-
       <div className="flex items-center gap-2 w-full">
         {visibleInput ? (
           <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Tree,
   getBackendOptions,
@@ -13,96 +13,54 @@ import { CustomNode } from "@/components/collection/custom-node";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const initialData = [
-  {
-    id: 1,
-    parent: 0,
-    droppable: true,
-    text: "Folder 1",
-    data: {
-      type: "folder",
-    },
-  },
-  {
-    id: 2,
-    parent: 1,
-    text: "File 1-1",
-    data: {
-      type: "file",
-    },
-  },
-  {
-    id: 3,
-    parent: 1,
-    text: "File 1-2",
-    data: {
-      type: "file",
-    },
-  },
-  {
-    id: 4,
-    parent: 0,
-    droppable: true,
-    text: "Folder 2",
-    data: {
-      type: "folder",
-    },
-  },
-  {
-    id: 5,
-    parent: 4,
-    droppable: true,
-    text: "Folder 2-1",
-    data: {
-      type: "folder",
-    },
-  },
-  {
-    id: 6,
-    parent: 5,
-    text: "File 2-1-1",
-    data: {
-      type: "file",
-    },
-  },
-];
+// interface FileType {
+//   type: "FOLDER" | "FILE";
+// }
+
+// type Node = {
+//   id: string | number;
+//   parent: string | number;
+//   text: string;
+//   data: FileType;
+// };
 
 const fetchAllCollection = async () => {
   const response = await axios.get("/api/collection/fetch-all-collection");
-  console.log("res is", JSON.stringify(response.data.collection));
-  return initialData;
+  return response.data.collection;
 };
 
 export default function FileTree() {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["fetchAllCollection"],
-    queryFn: () => fetchAllCollection(),
+    queryFn: fetchAllCollection,
   });
 
-  const [treeData, setTreeData] = useState(initialData);
-  const handleDrop = (newTreeData: any) => setTreeData(newTreeData);
+  // 👇 initialize empty array instead of undefined
+  const [treeData, setTreeData] = useState<NodeModel[]>([]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // when `data` is fetched, update treeData
+  useEffect(() => {
+    if (data) {
+      setTreeData(data);
+    }
+  }, [data]);
 
-  if (isError) {
-    return <div>Some error occured</div>;
-  }
+  // if (isSuccess) {
+  //   setTreeData(data);
+  // }
+
+  const handleDrop = (newTreeData: NodeModel[]) => {
+    // @ts-ignore
+    setTreeData(newTreeData);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Some error occurred</div>;
 
   const handleTextChange = (id: NodeModel["id"], value: string) => {
-    const newTree = treeData.map((node) => {
-      if (node.id === id) {
-        return {
-          ...node,
-          text: value,
-        };
-      }
-
-      return node;
-    });
-
-    setTreeData(newTree);
+    setTreeData((prev) =>
+      prev.map((node) => (node.id === id ? { ...node, text: value } : node))
+    );
   };
 
   const handleDelete = (id: NodeModel["id"]) => {
@@ -110,38 +68,11 @@ export default function FileTree() {
       id,
       ...getDescendants(treeData, id).map((node) => node.id),
     ];
-    const newTree = treeData.filter(
-      (node: any) => !deleteIds.includes(node.id)
-    );
-
-    setTreeData(newTree);
+    setTreeData((prev) => prev.filter((node) => !deleteIds.includes(node.id)));
   };
 
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-      {/* <Tree
-        tree={treeData}
-        rootId={0}
-        onDrop={handleDrop}
-        render={(node, { depth, isOpen, onToggle }) => (
-          <div
-            className="flex items-center align-middle gap-x-1"
-            style={{ marginLeft: depth * 30 }}
-          >
-            {node.droppable && (
-              <span onClick={onToggle}>
-                {isOpen ? <ChevronDown /> : <ChevronRight />}
-              </span>
-            )}
-            {node.data?.type === "folder" ? (
-              <Folder className="w-4 h-4" />
-            ) : (
-              <File className="h-4 w-4" />
-            )}
-            {node.text}
-          </div>
-        )}
-      /> */}
       <div className="w-full">
         <Tree
           tree={treeData}
@@ -149,7 +80,6 @@ export default function FileTree() {
           onDrop={handleDrop}
           sort={false}
           render={(node, { depth, isOpen, onToggle }) => (
-            // <div className="hover:bg-accent px-2">
             <CustomNode
               node={node}
               depth={depth}
@@ -158,7 +88,6 @@ export default function FileTree() {
               onTextChange={handleTextChange}
               onDelete={handleDelete}
             />
-            // </div>
           )}
         />
       </div>

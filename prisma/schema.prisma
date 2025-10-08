@@ -129,6 +129,8 @@ model Collection {
   name String
   type FileType
 
+  droppable Boolean @default(true)
+
   parentId String?
   parent   Collection? @relation("CollectionChildren", fields: [parentId], references: [id])
 
