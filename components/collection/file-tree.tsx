@@ -6,6 +6,7 @@ import {
   getBackendOptions,
   MultiBackend,
   NodeModel,
+  getDescendants,
 } from "@minoru/react-dnd-treeview";
 import { DndProvider } from "react-dnd";
 import {
@@ -91,6 +92,16 @@ export default function FileTree() {
     setTreeData(newTree);
   };
 
+  const handleDelete = (id: NodeModel["id"]) => {
+    const deleteIds = [
+      id,
+      ...getDescendants(treeData, id).map((node) => node.id),
+    ];
+    const newTree = treeData.filter((node) => !deleteIds.includes(node.id));
+
+    setTreeData(newTree);
+  };
+
   return (
     <DndProvider backend={MultiBackend} options={getBackendOptions()}>
       {/* <Tree
@@ -130,6 +141,7 @@ export default function FileTree() {
               isOpen={isOpen}
               onToggle={onToggle}
               onTextChange={handleTextChange}
+              onDelete={handleDelete}
             />
             // </div>
           )}
