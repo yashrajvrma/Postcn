@@ -89,7 +89,7 @@ export const CustomNode: React.FC<Props> = ({
               autoFocus
             />
             <button
-              className="p-1 text-green-600 hover:bg-green-100 rounded-md disabled:opacity-50"
+              className="p-1 rounded-md disabled:opacity-50"
               onClick={handleSubmit}
               disabled={labelText.trim() === ""}
             >
@@ -103,7 +103,7 @@ export const CustomNode: React.FC<Props> = ({
             </button>
           </div>
         ) : (
-          <div className="flex justify-between bg-green-100 w-full">
+          <div className="flex justify-between w-full">
             <div className="flex text-sm text-gray-800">
               {text}
               {/* {hover && (

@@ -1,12 +1,11 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
-import { CodeXml, Bot } from "lucide-react";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "../ui/resizable";
-import ResponsePanel from "./response-panel";
-import RightPanel from "./right-panel";
+} from "@/components/ui/resizable";
+import ResponsePanel from "@/components/main-content/response-panel";
+import RightPanel from "@/components/main-content/right-panel";
+import RequestPanel from "@/components/main-content/request/request-panel";
 
 export default function Panel() {
   return (
@@ -17,9 +16,10 @@ export default function Panel() {
       <ResizablePanel defaultSize={80} className="h-full">
         <ResizablePanelGroup direction="vertical" className="h-full">
           <ResizablePanel defaultSize={55}>
-            <div className="flex items-center justify-center h-full">
+            {/* <div className="flex items-center justify-center h-full">
               <span className="font-semibold">one</span>
-            </div>
+            </div> */}
+            <RequestPanel />
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel
