@@ -31,8 +31,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sessions Session[]
-  accounts Account[]
+  sessions   Session[]
+  accounts   Account[]
+  Collection Collection[]
 
   @@map("user")
 }
@@ -81,40 +82,60 @@ model Verification {
   expiresAt  DateTime
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@map("verification")
 }
 
+// model Collection {
+//   id String @id @default(uuid())
+
+//   name     String
+//   isActive Boolean @default(true)
+
+//   createdAt      DateTime         @default(now())
+//   updatedAt      DateTime         @default(now()) @updatedAt
+//   FilesAndFolder FilesAndFolder[]
+
+//   @@map("collection")
+// }
+
+// model FilesAndFolder {
+//   id String @id @default(ulid())
+
+//   name String
+//   type FileType
+
+//   // collectionId String
+//   // collection   Collection @relation(fields: [collectionId], references: [id])
+
+//   parentId String?
+//   parent   FilesAndFolder? @relation("FolderChildren", fields: [parentId], references: [id])
+
+//   children FilesAndFolder[] @relation("FolderChildren")
+
+//   createdAt  DateTime     @default(now())
+//   updatedAt  DateTime     @default(now()) @updatedAt
+
+//   @@map("file_and_folder")
+// }
+
 model Collection {
-  id String @id @default(uuid())
-
-  name     String
-  isActive Boolean @default(true)
-
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now()) @updatedAt
-  FilesAndFolder FilesAndFolder[]
-
-  @@map("collection")
-}
-
-model FilesAndFolder {
   id String @id @default(ulid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
   name String
   type FileType
 
-  collectionId String
-  collection   Collection @relation(fields: [collectionId], references: [id])
-
   parentId String?
-  parent   FilesAndFolder? @relation("FolderChildren", fields: [parentId], references: [id])
+  parent   Collection? @relation("CollectionChildren", fields: [parentId], references: [id])
 
-  children FilesAndFolder[] @relation("FolderChildren")
+  children Collection[] @relation("CollectionChildren")
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt DateTime @updatedAt
 
-  @@map("file_and_folder")
+  @@map("collection")
 }
