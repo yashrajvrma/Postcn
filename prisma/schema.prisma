@@ -121,7 +121,7 @@ model Verification {
 // }
 
 model Collection {
-  id String @id @default(ulid())
+  id String @id @default(uuid())
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
