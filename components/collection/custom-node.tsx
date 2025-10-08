@@ -16,8 +16,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
-// import { CustomData } from "./types";
+import { unknown } from "better-auth";
 
 type Props = {
   node: NodeModel;
@@ -129,7 +128,6 @@ export const CustomNode: React.FC<Props> = ({
                   onOpenChange={setDropdownOpen}
                 >
                   <DropdownMenuTrigger asChild>
-                    {/* <button className="hover:bg-gray-100 rounded-md"></button> */}
                     <Ellipsis
                       onClick={(e) => {
                         e.stopPropagation();

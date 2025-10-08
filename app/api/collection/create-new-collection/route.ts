@@ -11,8 +11,10 @@ export async function POST(request: Request) {
       headers: await headers(),
     });
 
-    if (!session) {
-      redirect("/signin");
+    const userId = session?.user.id;
+
+    if (!userId) {
+      return new Response("Unauthorized", { status: 401 });
     }
 
     console.log("collection name is", name);
@@ -22,8 +24,6 @@ export async function POST(request: Request) {
         status: 400,
       });
     }
-
-    const userId = session.user.id;
 
     const collection = await prisma.collection.create({
       data: {

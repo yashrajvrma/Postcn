@@ -9,15 +9,9 @@ import {
   getDescendants,
 } from "@minoru/react-dnd-treeview";
 import { DndProvider } from "react-dnd";
-import {
-  ChevronDown,
-  ChevronRight,
-  ChevronUp,
-  File,
-  Folder,
-} from "lucide-react";
 import { CustomNode } from "@/components/collection/custom-node";
-// import initialData from "./sample-default.json";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const initialData = [
   {
@@ -73,9 +67,28 @@ const initialData = [
   },
 ];
 
+const fetchAllCollection = async () => {
+  const response = await axios.get("/api/collection/fetch-all-collection");
+  console.log("res is", JSON.stringify(response.data.collection));
+  return initialData;
+};
+
 export default function FileTree() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["fetchAllCollection"],
+    queryFn: () => fetchAllCollection(),
+  });
+
   const [treeData, setTreeData] = useState(initialData);
   const handleDrop = (newTreeData: any) => setTreeData(newTreeData);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Some error occured</div>;
+  }
 
   const handleTextChange = (id: NodeModel["id"], value: string) => {
     const newTree = treeData.map((node) => {
@@ -97,7 +110,9 @@ export default function FileTree() {
       id,
       ...getDescendants(treeData, id).map((node) => node.id),
     ];
-    const newTree = treeData.filter((node) => !deleteIds.includes(node.id));
+    const newTree = treeData.filter(
+      (node: any) => !deleteIds.includes(node.id)
+    );
 
     setTreeData(newTree);
   };
