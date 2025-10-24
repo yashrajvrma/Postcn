@@ -13,17 +13,6 @@ import { CustomNode } from "@/components/collection/custom-node";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-// interface FileType {
-//   type: "FOLDER" | "FILE";
-// }
-
-// type Node = {
-//   id: string | number;
-//   parent: string | number;
-//   text: string;
-//   data: FileType;
-// };
-
 const fetchAllCollection = async () => {
   const response = await axios.get("/api/collection/fetch");
   return response.data.collection;

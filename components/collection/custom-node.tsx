@@ -15,6 +15,12 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { addRequest } from "@/actions/add-request";
+import { NodeType } from "@/types";
+import { authClient } from "@/lib/auth/auth-client";
+import { addFolder } from "@/actions/add-folder";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   node: NodeModel;
@@ -33,6 +39,8 @@ export const CustomNode: React.FC<Props> = ({
   onTextChange,
   onDelete,
 }) => {
+  const queryClient = useQueryClient();
+
   const [hover, setHover] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -40,6 +48,42 @@ export const CustomNode: React.FC<Props> = ({
   const [visibleInput, setVisibleInput] = useState(false);
   const [labelText, setLabelText] = useState(text);
   const indent = depth * 24;
+
+  const handleAddNewRequest = async (nodeId: string | number) => {
+    console.log("item id is", nodeId);
+
+    // const node = await addRequest({
+    //   name: "hello motherfucker",
+    //   parentId: nodeId,
+    //   type: NodeType.FILE,
+    // });
+
+    console.log("result is", JSON.stringify(node));
+
+    if (node) {
+      queryClient.invalidateQueries({
+        queryKey: ["fetchAllCollection"],
+      });
+    }
+  };
+
+  const handleAddNewFolder = async (nodeId: string | number) => {
+    console.log("folder id is", nodeId);
+
+    // const folder = await addFolder({
+    //   name: "New Folder",
+    //   parentId: nodeId,
+    //   type: NodeType.FOLDER,
+    // });
+
+    console.log("folder is", JSON.stringify(folder));
+
+    if (folder) {
+      queryClient.invalidateQueries({
+        queryKey: ["fetchAllCollection"],
+      });
+    }
+  };
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -139,12 +183,29 @@ export const CustomNode: React.FC<Props> = ({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-40" align="start">
                     <DropdownMenuGroup>
-                      <DropdownMenuItem >Add Request</DropdownMenuItem>
+                      {
+                        // @ts-ignore
+                        data.type === "FOLDER" && (
+                          <>
+                            <DropdownMenuItem
+                              onClick={() => handleAddNewRequest(id)}
+                            >
+                              Add Request
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => handleAddNewFolder(id)}
+                            >
+                              Add Folder
+                            </DropdownMenuItem>
+                          </>
+                        )
+                      }
+
                       <DropdownMenuItem onClick={handleShowInput}>
                         Rename
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        className="text-red-500 hover:bg-red-500 hover:text-primary-foreground"
+                        className="text-red-500 hover:bg-red-500 hover:text-neutral-50"
                         onClick={() => onDelete(id)}
                       >
                         Delete
