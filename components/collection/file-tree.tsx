@@ -25,7 +25,7 @@ import axios from "axios";
 // };
 
 const fetchAllCollection = async () => {
-  const response = await axios.get("/api/collection/fetch-all-collection");
+  const response = await axios.get("/api/collection/fetch");
   return response.data.collection;
 };
 

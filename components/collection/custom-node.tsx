@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { ChevronRight, Check, X, Edit3, Ellipsis } from "lucide-react";
 import { NodeModel, useDragOver } from "@minoru/react-dnd-treeview";
@@ -75,16 +74,19 @@ export const CustomNode: React.FC<Props> = ({
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {data.type === "FOLDER" && (
-        <div
-          onClick={handleToggle}
-          className={`flex items-center justify-center w-6 h-6 transition-transform duration-100 text-muted-foreground ml-3.5 ${
-            isOpen ? "rotate-90" : "rotate-0"
-          }`}
-        >
-          <ChevronRight strokeWidth={2} className="w-4 h-4" />
-        </div>
-      )}
+      {
+        // @ts-ignore
+        data.type === "FOLDER" && (
+          <div
+            onClick={handleToggle}
+            className={`flex items-center justify-center w-6 h-6 transition-transform duration-100 text-muted-foreground ml-3.5 ${
+              isOpen ? "rotate-90" : "rotate-0"
+            }`}
+          >
+            <ChevronRight strokeWidth={2} className="w-4 h-4" />
+          </div>
+        )
+      }
       <div className="flex items-center gap-2 w-full">
         {visibleInput ? (
           <div
@@ -137,7 +139,7 @@ export const CustomNode: React.FC<Props> = ({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-40" align="start">
                     <DropdownMenuGroup>
-                      <DropdownMenuItem>Add Request</DropdownMenuItem>
+                      <DropdownMenuItem >Add Request</DropdownMenuItem>
                       <DropdownMenuItem onClick={handleShowInput}>
                         Rename
                       </DropdownMenuItem>

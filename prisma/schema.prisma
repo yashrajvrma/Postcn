@@ -87,6 +87,28 @@ model Verification {
   @@map("verification")
 }
 
+model Collection {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  name String
+  type FileType // FOLDER | FILE
+
+  droppable Boolean @default(true)
+
+  parentId String?
+  parent   Collection? @relation("CollectionChildren", fields: [parentId], references: [id])
+
+  children Collection[] @relation("CollectionChildren")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("collection")
+}
+
 // model Collection {
 //   id String @id @default(uuid())
 
@@ -119,25 +141,3 @@ model Verification {
 
 //   @@map("file_and_folder")
 // }
-
-model Collection {
-  id String @id @default(uuid())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  name String
-  type FileType
-
-  droppable Boolean @default(true)
-
-  parentId String?
-  parent   Collection? @relation("CollectionChildren", fields: [parentId], references: [id])
-
-  children Collection[] @relation("CollectionChildren")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("collection")
-}

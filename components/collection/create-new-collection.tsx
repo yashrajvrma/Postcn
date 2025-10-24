@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { Spinner } from "../spinner";
@@ -27,10 +27,15 @@ const CreateNewCollectionFn = (name: string) => {
 export default function CreateNewCollection() {
   const [open, setOpen] = useState(false);
 
+  const queryClient = useQueryClient();
+
   const { mutate: createNewCollection, isPending } = useMutation({
     mutationFn: CreateNewCollectionFn,
     onSuccess: (data) => {
       console.log("data is", JSON.stringify(data));
+      queryClient.invalidateQueries({
+        queryKey: ["fetchAllCollection"],
+      });
       toast.success(`${data.data.message}`);
       setOpen(false);
     },
