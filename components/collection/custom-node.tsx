@@ -18,63 +18,80 @@ import {
 import { Button } from "../ui/button";
 import { addRequest } from "@/actions/add-request";
 import { NodeType } from "@/types";
-import { authClient } from "@/lib/auth/auth-client";
 import { addFolder } from "@/actions/add-folder";
 import { useQueryClient } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
+import { Input } from "../ui/input";
 
 type Props = {
   node: NodeModel;
   depth: number;
   isOpen: boolean;
+  isSelected: boolean;
   onToggle: (id: NodeModel["id"]) => void;
   onTextChange: (id: NodeModel["id"], value: string) => void;
   onDelete: (id: NodeModel["id"]) => void;
+  onSelect: (node: NodeModel) => void;
 };
 
-export const CustomNode: React.FC<Props> = ({
-  node,
-  depth,
-  isOpen,
-  onToggle,
-  onTextChange,
-  onDelete,
-}) => {
+export const CustomNode: React.FC<Props> = (props) => {
   const queryClient = useQueryClient();
+
+  const { id, text, data } = props.node;
+  const {
+    onToggle,
+    onTextChange,
+    onDelete,
+    onSelect,
+    node,
+    depth,
+    isOpen,
+    isSelected,
+  } = props;
 
   const [hover, setHover] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { id, text, data } = node;
   const [visibleInput, setVisibleInput] = useState(false);
-  const [labelText, setLabelText] = useState(text);
-  const indent = depth * 24;
+  const [labelText, setLabelText] = useState<string>("");
+
+  const indent = props.depth * 24;
+
+  const handleSelect = () => {
+    onSelect(node);
+    console.log("handleSelect", node);
+  };
 
   const handleAddNewRequest = async (nodeId: string | number) => {
     console.log("item id is", nodeId);
 
-    // const node = await addRequest({
-    //   name: "hello motherfucker",
-    //   parentId: nodeId,
-    //   type: NodeType.FILE,
-    // });
+    const request = await addRequest({
+      name: "New Request",
+      parentId: nodeId,
+      type: NodeType.FILE,
+    });
 
-    console.log("result is", JSON.stringify(node));
+    console.log("result is", JSON.stringify(request));
 
-    if (node) {
+    if (request) {
       queryClient.invalidateQueries({
         queryKey: ["fetchAllCollection"],
       });
+      if (request?.parentId) {
+        props.onToggle(request.parentId);
+        console.log("toggled");
+      }
     }
   };
 
   const handleAddNewFolder = async (nodeId: string | number) => {
     console.log("folder id is", nodeId);
 
-    // const folder = await addFolder({
-    //   name: "New Folder",
-    //   parentId: nodeId,
-    //   type: NodeType.FOLDER,
-    // });
+    const folder = await addFolder({
+      name: "New Folder",
+      parentId: nodeId,
+      type: NodeType.FOLDER,
+    });
 
     console.log("folder is", JSON.stringify(folder));
 
@@ -82,6 +99,10 @@ export const CustomNode: React.FC<Props> = ({
       queryClient.invalidateQueries({
         queryKey: ["fetchAllCollection"],
       });
+      if (folder?.parentId) {
+        props.onToggle(folder.parentId);
+        console.log("toggled");
+      }
     }
   };
 
@@ -112,20 +133,27 @@ export const CustomNode: React.FC<Props> = ({
 
   return (
     <div
-      className="flex items-center h-8 gap-x-2.5 select-none cursor-pointer px-2 hover:bg-sidebar-accent"
+      className={cn(
+        "flex items-center h-8 gap-x-2.5 cursor-pointer px-2",
+        isSelected
+          ? "bg-secondary text-secondary-foreground"
+          : "hover:bg-sidebar-accent"
+      )}
       style={{ paddingInlineStart: indent }}
       {...dragOverProps}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={handleToggle}
     >
       {
         // @ts-ignore
         data.type === "FOLDER" && (
           <div
-            onClick={handleToggle}
-            className={`flex items-center justify-center w-6 h-6 transition-transform duration-100 text-muted-foreground ml-3.5 ${
-              isOpen ? "rotate-90" : "rotate-0"
-            }`}
+            className={cn(
+              "flex items-center justify-center w-6 h-6 transition-transform duration-100 text-muted-foreground ml-3.5",
+              isOpen ? "rotate-90" : "rotate-0",
+              isSelected && "text-secondary-foreground"
+            )}
           >
             <ChevronRight strokeWidth={2} className="w-4 h-4" />
           </div>
@@ -137,29 +165,33 @@ export const CustomNode: React.FC<Props> = ({
             className="flex items-center gap-1"
             onClick={(e) => e.stopPropagation()}
           >
-            <input
-              className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-40"
+            <Input
+              className="rounded-md text-sm focus:outline-none w-[90%] h-full"
               value={labelText}
               onChange={handleChangeText}
               autoFocus
             />
-            <button
-              className="p-0.5 rounded-md disabled:opacity-50 hover:bg-green-300"
+            <Button
+              className="disabled:opacity-50"
               onClick={handleSubmit}
               disabled={labelText.trim() === ""}
+              size="sm"
+              variant="default"
             >
-              <Check className="w-4 h-4" strokeWidth={2} />
-            </button>
-            <button
-              className="p-0.5 text-red-500 hover:bg-red-100 rounded-md"
+              <Check className="w-5 h-5" strokeWidth={2} />
+            </Button>
+            <Button
+              variant="destructive"
+              // className="text-accent-foreground bg-red-400"
               onClick={handleCancel}
+              size="sm"
             >
-              <X className="w-4 h-4" strokeWidth={2} />
-            </button>
+              <X className="w-5 h-5" strokeWidth={2} />
+            </Button>
           </div>
         ) : (
           <div className="flex justify-between w-full">
-            <div className="flex text-sm w-full" onClick={handleToggle}>
+            <div className="flex text-sm w-full" onClick={handleSelect}>
               {text}
             </div>
             <div
@@ -178,7 +210,11 @@ export const CustomNode: React.FC<Props> = ({
                         setDropdownOpen(true);
                       }}
                       strokeWidth={2}
-                      className="h-5 w-5 hover:bg-accent p-0.5"
+                      // className="h-5 w-5 hover:bg-accent p-0.5"
+                      className={cn(
+                        "h-5 w-5 p-0.5",
+                        isSelected ? "hover:bg-transparent" : "hover:bg-accent"
+                      )}
                     />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-40" align="start">

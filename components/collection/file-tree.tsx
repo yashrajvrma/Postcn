@@ -24,8 +24,8 @@ export default function FileTree() {
     queryFn: fetchAllCollection,
   });
 
-  // 👇 initialize empty array instead of undefined
   const [treeData, setTreeData] = useState<NodeModel[]>([]);
+  const [selectedNode, setSelectedNode] = useState<NodeModel>();
 
   // when `data` is fetched, update treeData
   useEffect(() => {
@@ -45,6 +45,8 @@ export default function FileTree() {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Some error occurred</div>;
+
+  const handleSelect = (node: NodeModel) => setSelectedNode(node);
 
   const handleTextChange = (id: NodeModel["id"], value: string) => {
     setTreeData((prev) =>
@@ -73,9 +75,11 @@ export default function FileTree() {
               node={node}
               depth={depth}
               isOpen={isOpen}
+              isSelected={node.id === selectedNode?.id}
               onToggle={onToggle}
               onTextChange={handleTextChange}
               onDelete={handleDelete}
+              onSelect={handleSelect}
             />
           )}
         />
