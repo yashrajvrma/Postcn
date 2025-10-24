@@ -30,9 +30,10 @@ const CodeEditor = ({ content }: { content: string }) => {
       ref={editorRef}
       value={value}
       extensions={[json(), EditorView.lineWrapping]}
-      theme={xcodeLight}
-      // height="600px"
+      theme={xcodeDark}
+      height="600px"
       editable={false}
+      // className="h-[100vh]"
     />
   );
 };
