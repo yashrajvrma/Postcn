@@ -52,7 +52,7 @@ const models = [
   },
   {
     name: "Deepseek R1",
-    value: "deepseek/deepseek-r1",
+    value: "deepseek-r1",
   },
 ];
 
