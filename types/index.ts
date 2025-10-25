@@ -16,3 +16,8 @@ export type FolderType = {
   parentId: string | number;
   type: NodeType;
 };
+
+export interface RenameNode {
+  newName: string;
+  nodeId: string;
+}

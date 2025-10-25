@@ -23,6 +23,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import lodash from "lodash";
+import renameNode from "@/actions/rename-node";
 
 type Props = {
   node: NodeModel;
@@ -54,13 +55,14 @@ export const CustomNode: React.FC<Props> = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const [visibleInput, setVisibleInput] = useState(false);
-  const [labelText, setLabelText] = useState<string>("");
+  const [labelText, setLabelText] = useState<string>(text);
 
   const indent = props.depth * 24;
 
   const handleSelect = () => {
     onSelect(node);
     console.log("handleSelect", node);
+    console.log(`label text is ${labelText} and`);
   };
 
   const handleAddNewRequest = async (nodeId: string | number) => {
@@ -122,12 +124,25 @@ export const CustomNode: React.FC<Props> = (props) => {
     setVisibleInput(false);
   };
 
-  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLabelText(e.target.value);
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setVisibleInput(false);
     onTextChange(id, labelText);
+    // TODO : add action to rename node
+    const newNode = await renameNode({
+      nodeId: id as string,
+      newName: labelText,
+    });
+
+    if (newNode) {
+      queryClient.invalidateQueries({
+        queryKey: ["fetchAllCollection"],
+      });
+      console.log("updated name is", newNode.name);
+    }
   };
 
   const dragOverProps = useDragOver(id, isOpen, onToggle);
@@ -182,8 +197,8 @@ export const CustomNode: React.FC<Props> = (props) => {
               <Check className="w-5 h-5" strokeWidth={2} />
             </Button>
             <Button
-              variant="destructive"
-              // className="text-accent-foreground bg-red-400"
+              variant="secondary"
+              className="text-neutral-50 bg-red-500 hover:bg-red-600 hover:text-amber-50"
               onClick={handleCancel}
               size="sm"
             >
