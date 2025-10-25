@@ -15,13 +15,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { addRequest } from "@/actions/add-request";
 import { NodeType } from "@/types";
 import { addFolder } from "@/actions/add-folder";
 import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
+import lodash from "lodash";
 
 type Props = {
   node: NodeModel;
@@ -192,7 +193,10 @@ export const CustomNode: React.FC<Props> = (props) => {
         ) : (
           <div className="flex justify-between w-full">
             <div className="flex text-sm w-full" onClick={handleSelect}>
-              {text}
+              {/* {text} */}
+              {lodash.truncate(text, {
+                length: 25,
+              })}
             </div>
             <div
               className="flex justify-center items-center"
