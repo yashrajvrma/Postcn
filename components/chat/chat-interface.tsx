@@ -43,6 +43,7 @@ import {
   ReasoningContent,
   ReasoningTrigger,
 } from "@/components/ai-elements/reasoning";
+import { DefaultChatTransport } from "ai";
 import { Loader } from "@/components/ai-elements/loader";
 
 const models = [
@@ -60,7 +61,15 @@ export default function ChatBotDemo() {
   const [input, setInput] = useState("");
   const [model, setModel] = useState<string>(models[0].value);
   const [webSearch, setWebSearch] = useState(false);
-  const { messages, sendMessage, status, regenerate } = useChat();
+  const { messages, sendMessage, status, regenerate } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+      // only send the last message to the server:
+      prepareSendMessagesRequest({ messages, id }) {
+        return { body: { message: messages[messages.length - 1], id } };
+      },
+    }),
+  });
 
   const handleSubmit = (message: PromptInputMessage) => {
     const hasText = Boolean(message.text);

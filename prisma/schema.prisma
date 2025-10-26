@@ -127,7 +127,7 @@ model Message {
   collectionId String
   collection   Collection @relation(fields: [collectionId], references: [id])
 
-  content String
+  content Json
   role    Role
 
   createdAt DateTime    @default(now())
