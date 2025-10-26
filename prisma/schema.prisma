@@ -18,6 +18,11 @@ enum FileType {
   FILE
 }
 
+enum Role {
+  USER
+  ASSISTANT
+}
+
 model User {
   id String @id @default(uuid())
 
@@ -34,6 +39,8 @@ model User {
   sessions   Session[]
   accounts   Account[]
   Collection Collection[]
+  Message    Message[]
+  MockRoute  MockRoute[]
 
   @@map("user")
 }
@@ -103,41 +110,50 @@ model Collection {
 
   children Collection[] @relation("CollectionChildren")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  Message   Message[]
+  MockRoute MockRoute[]
 
   @@map("collection")
 }
 
-// model Collection {
-//   id String @id @default(uuid())
+model Message {
+  id String @id @default(uuid())
 
-//   name     String
-//   isActive Boolean @default(true)
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-//   createdAt      DateTime         @default(now())
-//   updatedAt      DateTime         @default(now()) @updatedAt
-//   FilesAndFolder FilesAndFolder[]
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id])
 
-//   @@map("collection")
-// }
+  content String
+  role    Role
 
-// model FilesAndFolder {
-//   id String @id @default(ulid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  MockRoute MockRoute[]
 
-//   name String
-//   type FileType
+  @@map("message")
+}
 
-//   // collectionId String
-//   // collection   Collection @relation(fields: [collectionId], references: [id])
+model MockRoute {
+  id String @id @default(uuid())
 
-//   parentId String?
-//   parent   FilesAndFolder? @relation("FolderChildren", fields: [parentId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 
-//   children FilesAndFolder[] @relation("FolderChildren")
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id])
 
-//   createdAt  DateTime     @default(now())
-//   updatedAt  DateTime     @default(now()) @updatedAt
+  method   String
+  path     String
+  response Json
 
-//   @@map("file_and_folder")
-// }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Message   Message? @relation(fields: [messageId], references: [id])
+  messageId String?
+
+  @@map("mock_route")
+}

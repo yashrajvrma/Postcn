@@ -44,7 +44,7 @@ const tools = {
       path: z.string(),
       response: z.object({}),
     }),
-    execute : async ({}) => {
+    execute : async ({method, path, response, }) => {
       await 
     }
   }),
