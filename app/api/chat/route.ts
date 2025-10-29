@@ -99,12 +99,21 @@ const toolSet = {
         },
       });
 
+      const baseUrl =
+        process.env.NODE_ENV === "production"
+          ? process.env.NEXT_PUBLIC_PROD_BASE_URL
+          : process.env.NEXT_PUBLIC_DEV_BASE_URL;
+
+      const requestPath = `${baseUrl}${
+        path.startsWith("/") ? path : `/${path}`
+      }`;
+
       const route = await prisma.mockRoute.create({
         data: {
           userId: userId,
           collectionId: collection.id,
           method: method,
-          path: path,
+          path: requestPath,
           response: response as Prisma.InputJsonValue,
         },
       });
