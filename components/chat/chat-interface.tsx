@@ -65,6 +65,8 @@ export default function ChatBotDemo() {
     transport: new DefaultChatTransport({
       api: "/api/chat",
     }),
+    // Throttle the messages and data updates to 50ms:
+    experimental_throttle: 50,
   });
 
   const handleSubmit = (message: PromptInputMessage) => {

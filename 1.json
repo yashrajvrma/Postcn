@@ -3,10 +3,10 @@
     "parts": [
       {
         "type": "text",
-        "text": "create a mock route that returns bikedata with name, vehicel no of 10 bike and on get endpoint"
+        "text": "create a api route that returns fruits data, name, type, season, and avg price"
       }
     ],
-    "id": "6ScL2A8xIXtaE6DQ",
+    "id": "5F8LGeXJ3Y4uB3fS",
     "role": "user"
   },
   {
@@ -16,62 +16,84 @@
       { "type": "step-start" },
       {
         "type": "tool-createMockRoute",
-        "toolCallId": "call_6izPRFM54NbPT34GXZ7Taq5N",
+        "toolCallId": "call_qjIjHoYQm70cSnAFJ8lO8Pqr",
         "state": "output-available",
         "input": {
           "method": "GET",
-          "path": "/bikedata",
+          "path": "/fruits",
           "response": [
-            { "name": "Speedster", "vehicle_no": "BKE001" },
-            { "name": "RacerX", "vehicle_no": "BKE002" },
-            { "name": "RoadRunner", "vehicle_no": "BKE003" },
-            { "name": "Thunderbolt", "vehicle_no": "BKE004" },
-            { "name": "Lightning", "vehicle_no": "BKE005" },
-            { "name": "Falcon", "vehicle_no": "BKE006" },
-            { "name": "NightRider", "vehicle_no": "BKE007" },
-            { "name": "Comet", "vehicle_no": "BKE008" },
-            { "name": "Turbo", "vehicle_no": "BKE009" },
-            { "name": "Vortex", "vehicle_no": "BKE010" }
+            {
+              "id": 1,
+              "name": "Apple",
+              "type": "Pome",
+              "season": "Fall",
+              "avgPrice": 1.2
+            },
+            {
+              "id": 2,
+              "name": "Banana",
+              "type": "Berry",
+              "season": "Year-round",
+              "avgPrice": 0.5
+            },
+            {
+              "id": 3,
+              "name": "Cherry",
+              "type": "Drupe",
+              "season": "Spring",
+              "avgPrice": 3
+            }
           ]
         },
         "output": {
           "message": "Mock route created",
           "route": {
-            "id": "1852778c-eb0d-4dba-aec2-8ab719f1a855",
+            "id": "2cc5834e-8dd8-483c-affe-c1ac34432de4",
             "userId": "xaaC6vYzTtfpGg1wZdoQDQhcRIBXauvQ",
             "collectionId": "2e900b7a-aed4-4dd7-8737-a4e43f0f9725",
             "method": "GET",
-            "path": "/bikedata",
+            "path": "/fruits",
             "response": [
-              { "name": "Speedster", "vehicle_no": "BKE001" },
-              { "name": "RacerX", "vehicle_no": "BKE002" },
-              { "name": "RoadRunner", "vehicle_no": "BKE003" },
-              { "name": "Thunderbolt", "vehicle_no": "BKE004" },
-              { "name": "Lightning", "vehicle_no": "BKE005" },
-              { "name": "Falcon", "vehicle_no": "BKE006" },
-              { "name": "NightRider", "vehicle_no": "BKE007" },
-              { "name": "Comet", "vehicle_no": "BKE008" },
-              { "name": "Turbo", "vehicle_no": "BKE009" },
-              { "name": "Vortex", "vehicle_no": "BKE010" }
+              {
+                "id": 1,
+                "name": "Apple",
+                "type": "Pome",
+                "season": "Fall",
+                "avgPrice": 1.2
+              },
+              {
+                "id": 2,
+                "name": "Banana",
+                "type": "Berry",
+                "season": "Year-round",
+                "avgPrice": 0.5
+              },
+              {
+                "id": 3,
+                "name": "Cherry",
+                "type": "Drupe",
+                "season": "Spring",
+                "avgPrice": 3
+              }
             ],
-            "createdAt": "2025-10-29T13:00:09.926Z",
-            "updatedAt": "2025-10-29T13:00:09.926Z",
+            "createdAt": "2025-10-29T13:14:05.557Z",
+            "updatedAt": "2025-10-29T13:14:05.557Z",
             "messageId": null
           }
         },
         "callProviderMetadata": {
           "openai": {
-            "itemId": "fc_05ced9c175ec47e30069020fd4b478819d91ad58c02bb4bed6"
+            "itemId": "fc_008317545c6151d70069021319cb6c8197a6ada61312f6e26f"
           }
         }
       },
       { "type": "step-start" },
       {
         "type": "text",
-        "text": "The mock route has been successfully created.\n\n- **Endpoint:** `GET /bikedata`\n- **Response:** An array of 10 bike objects, each with `name` and `vehicle_no`.\n  \nExamples of bike objects:\n```json\n[\n  {\"name\":\"Speedster\",\"vehicle_no\":\"BKE001\"},\n  {\"name\":\"RacerX\",\"vehicle_no\":\"BKE002\"},\n  {\"name\":\"RoadRunner\",\"vehicle_no\":\"BKE003\"},\n  {\"name\":\"Thunderbolt\",\"vehicle_no\":\"BKE004\"},\n  {\"name\":\"Lightning\",\"vehicle_no\":\"BKE005\"},\n  {\"name\":\"Falcon\",\"vehicle_no\":\"BKE006\"},\n  {\"name\":\"NightRider\",\"vehicle_no\":\"BKE007\"},\n  {\"name\":\"Comet\",\"vehicle_no\":\"BKE008\"},\n  {\"name\":\"Turbo\",\"vehicle_no\":\"BKE009\"},\n  {\"name\":\"Vortex\",\"vehicle_no\":\"BKE010\"}\n]\n```\n\nIf you need any more adjustments, feel free to let me know!",
+        "text": "The API route has been created successfully.\n\n- **Method:** GET\n- **Path:** `/fruits`\n- **Response:** An array of fruit objects, each containing:\n  - `id`\n  - `name`\n  - `type`\n  - `season`\n  - `avgPrice`\n\nExample response:\n```json\n[\n  {\"id\":1,\"name\":\"Apple\",\"type\":\"Pome\",\"season\":\"Fall\",\"avgPrice\":1.2},\n  {\"id\":2,\"name\":\"Banana\",\"type\":\"Berry\",\"season\":\"Year-round\",\"avgPrice\":0.5},\n  {\"id\":3,\"name\":\"Cherry\",\"type\":\"Drupe\",\"season\":\"Spring\",\"avgPrice\":3.0}\n]\n```\nFeel free to request any additional adjustments or new routes!",
         "providerMetadata": {
           "openai": {
-            "itemId": "msg_05ced9c175ec47e30069020fda4638819da32314fd5e463b6b"
+            "itemId": "msg_008317545c6151d7006902131e811c8197b9cca2e7494fad84"
           }
         },
         "state": "done"
