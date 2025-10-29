@@ -104,7 +104,7 @@ const toolSet = {
           ? process.env.NEXT_PUBLIC_PROD_BASE_URL
           : process.env.NEXT_PUBLIC_DEV_BASE_URL;
 
-      const requestPath = `${baseUrl}${
+      const requestPath = `${baseUrl}/${collection.id}${
         path.startsWith("/") ? path : `/${path}`
       }`;
 
