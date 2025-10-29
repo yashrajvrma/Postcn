@@ -1,12 +1,119 @@
 [
   {
+    "parts": [{ "type": "text", "text": "hii" }],
+    "id": "1M5lN5RCa2g9HFxP",
+    "role": "user"
+  },
+  {
+    "id": "3dIJFbGokgbDhaSY",
+    "role": "assistant",
     "parts": [
+      { "type": "step-start" },
       {
         "type": "text",
-        "text": "create a api route that returns fruits data, name, type, season, and avg price"
+        "text": "Hello! How can I assist you with mock API generation today?",
+        "providerMetadata": {
+          "openai": {
+            "itemId": "msg_0fb81ef1ed07e2ab0069024b5fd84881969ff960d7b0aa775e"
+          }
+        },
+        "state": "done"
       }
+    ]
+  },
+  {
+    "parts": [{ "type": "text", "text": "hello" }],
+    "id": "mMkJKT452mTQMudE",
+    "role": "user"
+  },
+  {
+    "id": "5wsBV2xbghgrhDVU",
+    "role": "assistant",
+    "parts": [
+      { "type": "step-start" },
+      {
+        "type": "text",
+        "text": "Hi there! What can I do for you in the realm of mock API generation?",
+        "providerMetadata": {
+          "openai": {
+            "itemId": "msg_0fb81ef1ed07e2ab0069024b6624808196b0677f7358b194d0"
+          }
+        },
+        "state": "done"
+      }
+    ]
+  },
+  {
+    "parts": [{ "type": "text", "text": "hello" }],
+    "id": "5PX5gHvQ40bEA5mU",
+    "role": "user"
+  },
+  {
+    "id": "wMwnfgX74wlcXogv",
+    "role": "assistant",
+    "parts": [
+      { "type": "step-start" },
+      {
+        "type": "text",
+        "text": "Hi! If you need help creating mock API endpoints, just let me know how I can assist you!",
+        "providerMetadata": {
+          "openai": {
+            "itemId": "msg_0fb81ef1ed07e2ab0069024b901cc081969d6d5ba71d74d433"
+          }
+        },
+        "state": "done"
+      }
+    ]
+  },
+  {
+    "parts": [{ "type": "text", "text": "hello" }],
+    "id": "xuyRMq8aYNrMXdR0",
+    "role": "user"
+  },
+  {
+    "id": "dcPpUIM9r8l3JyRr",
+    "role": "assistant",
+    "parts": [
+      { "type": "step-start" },
+      {
+        "type": "text",
+        "text": "Hello again! If there's a specific mock API you'd like to create or modify, just let me know, and I'll help you with that.",
+        "providerMetadata": {
+          "openai": {
+            "itemId": "msg_0fb81ef1ed07e2ab0069024bae1ec8819687c4e96aaab40f1d"
+          }
+        },
+        "state": "done"
+      }
+    ]
+  },
+  {
+    "parts": [{ "type": "text", "text": "hey" }],
+    "id": "r6llq6ir9GpduB4x",
+    "role": "user"
+  },
+  {
+    "id": "zciPTRE314Sa9m3z",
+    "role": "assistant",
+    "parts": [
+      { "type": "step-start" },
+      {
+        "type": "text",
+        "text": "Hello! How can I assist you with creating or managing mock APIs today?",
+        "providerMetadata": {
+          "openai": {
+            "itemId": "msg_0fb81ef1ed07e2ab0069024cbb6ad48196863e5daa5fd48218"
+          }
+        },
+        "state": "done"
+      }
+    ]
+  },
+  {
+    "parts": [
+      { "type": "text", "text": "create a mock api returning 10 todo" }
     ],
-    "id": "5F8LGeXJ3Y4uB3fS",
+    "id": "adyhzL4rsBS57dM5",
     "role": "user"
   },
   {
@@ -16,84 +123,63 @@
       { "type": "step-start" },
       {
         "type": "tool-createMockRoute",
-        "toolCallId": "call_qjIjHoYQm70cSnAFJ8lO8Pqr",
+        "toolCallId": "call_B9OEQlpQUpAqZZHZ7vZMg2wp",
         "state": "output-available",
         "input": {
+          "name": "Todo List",
           "method": "GET",
-          "path": "/fruits",
+          "path": "/todos",
           "response": [
-            {
-              "id": 1,
-              "name": "Apple",
-              "type": "Pome",
-              "season": "Fall",
-              "avgPrice": 1.2
-            },
-            {
-              "id": 2,
-              "name": "Banana",
-              "type": "Berry",
-              "season": "Year-round",
-              "avgPrice": 0.5
-            },
-            {
-              "id": 3,
-              "name": "Cherry",
-              "type": "Drupe",
-              "season": "Spring",
-              "avgPrice": 3
-            }
+            { "id": 1, "title": "Buy groceries", "completed": false },
+            { "id": 2, "title": "Call mom", "completed": true },
+            { "id": 3, "title": "Finish report", "completed": false },
+            { "id": 4, "title": "Schedule meeting", "completed": true },
+            { "id": 5, "title": "Plan vacation", "completed": false },
+            { "id": 6, "title": "Read book", "completed": true },
+            { "id": 7, "title": "Exercise", "completed": false },
+            { "id": 8, "title": "Cook dinner", "completed": false },
+            { "id": 9, "title": "Check emails", "completed": true },
+            { "id": 10, "title": "Pay bills", "completed": false }
           ]
         },
         "output": {
           "message": "Mock route created",
           "route": {
-            "id": "2cc5834e-8dd8-483c-affe-c1ac34432de4",
+            "id": "b5ff1a80-a5ef-4fe1-8574-def38a452f11",
             "userId": "xaaC6vYzTtfpGg1wZdoQDQhcRIBXauvQ",
-            "collectionId": "2e900b7a-aed4-4dd7-8737-a4e43f0f9725",
+            "collectionId": "40cd35c8-aad4-4902-a2a5-db37a1ec48ef",
             "method": "GET",
-            "path": "/fruits",
+            "path": "http://localhost:3000/40cd35c8-aad4-4902-a2a5-db37a1ec48ef/todos",
             "response": [
-              {
-                "id": 1,
-                "name": "Apple",
-                "type": "Pome",
-                "season": "Fall",
-                "avgPrice": 1.2
-              },
-              {
-                "id": 2,
-                "name": "Banana",
-                "type": "Berry",
-                "season": "Year-round",
-                "avgPrice": 0.5
-              },
-              {
-                "id": 3,
-                "name": "Cherry",
-                "type": "Drupe",
-                "season": "Spring",
-                "avgPrice": 3
-              }
+              { "id": 1, "title": "Buy groceries", "completed": false },
+              { "id": 2, "title": "Call mom", "completed": true },
+              { "id": 3, "title": "Finish report", "completed": false },
+              { "id": 4, "title": "Schedule meeting", "completed": true },
+              { "id": 5, "title": "Plan vacation", "completed": false },
+              { "id": 6, "title": "Read book", "completed": true },
+              { "id": 7, "title": "Exercise", "completed": false },
+              { "id": 8, "title": "Cook dinner", "completed": false },
+              { "id": 9, "title": "Check emails", "completed": true },
+              { "id": 10, "title": "Pay bills", "completed": false }
             ],
-            "createdAt": "2025-10-29T13:14:05.557Z",
-            "updatedAt": "2025-10-29T13:14:05.557Z",
+            "createdAt": "2025-10-29T17:22:30.110Z",
+            "updatedAt": "2025-10-29T17:22:30.110Z",
             "messageId": null
           }
         },
         "callProviderMetadata": {
           "openai": {
-            "itemId": "fc_008317545c6151d70069021319cb6c8197a6ada61312f6e26f"
+            "itemId": "fc_0fb81ef1ed07e2ab0069024d5084d08196831b81813633e4ac"
           }
         }
       },
       { "type": "step-start" },
       {
         "type": "text",
-        "text": "The API route has been created successfully.\n\n- **Method:** GET\n- **Path:** `/fruits`\n- **Response:** An array of fruit objects, each containing:\n  - `id`\n  - `name`\n  - `type`\n  - `season`\n  - `avgPrice`\n\nExample response:\n```json\n[\n  {\"id\":1,\"name\":\"Apple\",\"type\":\"Pome\",\"season\":\"Fall\",\"avgPrice\":1.2},\n  {\"id\":2,\"name\":\"Banana\",\"type\":\"Berry\",\"season\":\"Year-round\",\"avgPrice\":0.5},\n  {\"id\":3,\"name\":\"Cherry\",\"type\":\"Drupe\",\"season\":\"Spring\",\"avgPrice\":3.0}\n]\n```\nFeel free to request any additional adjustments or new routes!",
+        "text": "I've created a mock API endpoint for you!\n\n**Method:** GET  \n**Path:** `/todos`\n\n**Response:**\n```json\n[\n    {\"id\":1,\"title\":\"Buy groceries\",\"completed\":false},\n    {\"id\":2,\"title\":\"Call mom\",\"completed\":true},\n    {\"id\":3,\"title\":\"Finish report\",\"completed\":false},\n    {\"id\":4,\"title\":\"Schedule meeting\",\"completed\":true},\n    {\"id\":5,\"title\":\"Plan vacation\",\"completed\":false},\n    {\"id\":6,\"title\":\"Read book\",\"completed\":true},\n    {\"id\":7,\"title\":\"Exercise\",\"completed\":false},\n    {\"id\":8,\"title\":\"Cook dinner\",\"completed\":false},\n    {\"id\":9,\"title\":\"Check emails\",\"completed\":true},\n    {\"id\":10,\"title\":\"Pay bills\",\"completed\":false}\n]\n```\n\nFeel free to let me know if you need any more endpoints or modifications!",
         "providerMetadata": {
           "openai": {
-            "itemId": "msg_008317545c6151d7006902131e811c8197b9cca2e7494fad84"
+            "itemId": "msg_0fb81ef1ed07e2ab0069024d56560c81969eecadb70a5b3446"
           }
         },
         "state": "done"

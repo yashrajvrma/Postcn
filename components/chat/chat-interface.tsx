@@ -28,6 +28,7 @@ import {
   PromptInputTools,
 } from "@/components/ai-elements/prompt-input";
 import { Action, Actions } from "@/components/ai-elements/actions";
+import { Shimmer } from "@/components/ai-elements/shimmer";
 import { Fragment, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { Response } from "@/components/ai-elements/response";
@@ -175,7 +176,11 @@ export default function ChatBotDemo() {
                 })}
               </div>
             ))}
-            {status === "submitted" && <Loader />}
+            {/* {status === "submitted" ||
+              (status === "streaming" && <Shimmer>Generating...</Shimmer>)} */}
+            {status === "submitted" && (
+              <Shimmer className="text-sm">Generating...</Shimmer>
+            )}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
