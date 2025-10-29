@@ -52,6 +52,7 @@ const toolSet = {
   createMockRoute: tool({
     description: "Create a new Mock endpoint for the user",
     inputSchema: z.object({
+      name: z.string().describe("name of the mock api"),
       method: z
         .enum(RouteMethod)
         .describe("supported http method for api routes"),
@@ -64,7 +65,7 @@ const toolSet = {
         .describe("api response - can be an object or array"),
     }),
     execute: async (
-      { method, path, response },
+      { name, method, path, response },
       { experimental_context: context }
     ) => {
       const { userId, collectionId } = context as {
@@ -72,10 +73,36 @@ const toolSet = {
         collectionId: string;
       };
 
+      let parentId = "0";
+
+      // 1. find parent given a collection id
+      const parent = await prisma.collection.findUnique({
+        where: {
+          id: collectionId,
+        },
+        select: {
+          parentId: true,
+        },
+      });
+
+      if (parent?.parentId) {
+        parentId = parent.parentId;
+      }
+
+      // 2. create collection
+      const collection = await prisma.collection.create({
+        data: {
+          userId: userId,
+          name: name,
+          parentId: parentId,
+          type: "FILE",
+        },
+      });
+
       const route = await prisma.mockRoute.create({
         data: {
           userId: userId,
-          collectionId: collectionId,
+          collectionId: collection.id,
           method: method,
           path: path,
           response: response as Prisma.InputJsonValue,

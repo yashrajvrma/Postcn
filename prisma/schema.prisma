@@ -101,7 +101,7 @@ model Collection {
   user   User   @relation(fields: [userId], references: [id])
 
   name String
-  type FileType // FOLDER | FILE
+  // type FileType // FOLDER | FILE
 
   droppable Boolean @default(true)
 
