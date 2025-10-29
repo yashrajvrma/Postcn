@@ -1,15 +1,11 @@
+import { json } from "@codemirror/lang-json";
 import { openai } from "@ai-sdk/openai";
 import {
   UIMessage,
   streamText,
   convertToModelMessages,
   stepCountIs,
-  validateUIMessages,
   tool,
-  Experimental_Agent as Agent,
-  Experimental_InferAgentUIMessage as InferAgentUIMessage,
-  TypedToolCall,
-  TypedToolResult,
   NoSuchToolError,
   InvalidToolInputError,
 } from "ai";
@@ -19,6 +15,7 @@ import { RouteMethod } from "@/lib/constant";
 import prisma from "@/db";
 import { auth } from "@/lib/auth/auth-server";
 import { headers } from "next/headers";
+import { Prisma } from "@prisma/client";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -55,14 +52,16 @@ const toolSet = {
   createMockRoute: tool({
     description: "Create a new Mock endpoint for the user",
     inputSchema: z.object({
-      userId: z
-        .string()
-        .describe("a valid id of user for creating mock routes"),
       method: z
         .enum(RouteMethod)
         .describe("supported http method for api routes"),
       path: z.string().describe("mock api path"),
-      response: z.object({}).describe("api response"),
+      response: z
+        .union([
+          z.record(z.string(), z.unknown()), // For object responses
+          z.array(z.unknown()), // For array responses
+        ])
+        .describe("api response - can be an object or array"),
     }),
     execute: async (
       { method, path, response },
@@ -79,7 +78,7 @@ const toolSet = {
           collectionId: collectionId,
           method: method,
           path: path,
-          response: response,
+          response: response as Prisma.InputJsonValue,
         },
       });
       return {
@@ -96,8 +95,11 @@ const toolSet = {
         .describe("The updated new http method of mock api route"),
       path: z.string().describe("The updated new path of the mock api route"),
       response: z
-        .object({})
-        .describe("The updated new response of the mock api route"),
+        .union([
+          z.record(z.string(), z.unknown()), // For object responses
+          z.array(z.unknown()), // For array responses
+        ])
+        .describe("api response - can be an object or array"),
     }),
     execute: async (
       { method, path, response },
@@ -116,7 +118,7 @@ const toolSet = {
         data: {
           method: method,
           path: path,
-          response: response,
+          response: response as Prisma.InputJsonValue,
         },
       });
       return {
@@ -134,6 +136,8 @@ const toolSet = {
         collectionId: string;
       };
 
+      console.log("userId is", userId);
+      console.log("collection id is", collectionId);
       const route = await prisma.mockRoute.findMany({
         where: {
           userId: userId,
@@ -150,12 +154,12 @@ const toolSet = {
 
 export async function POST(req: Request) {
   const {
-    message,
+    messages,
     model,
     webSearch,
     nodeId,
   }: {
-    message: UIMessage;
+    messages: UIMessage[];
     model: string;
     webSearch: boolean;
     nodeId: string;
@@ -174,35 +178,19 @@ export async function POST(req: Request) {
     // TODD : remove this hard coded id
     const collectionId = nodeId || "2e900b7a-aed4-4dd7-8737-a4e43f0f9725";
 
-    // load previous messages from database
-    const previousMessages = await prisma.message.findMany({
-      where: {
-        userId: userId,
-        collectionId: collectionId,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-
-    const messages = [...previousMessages, message];
-
-    // const validatedMessages = await validateUIMessages({
-    //   messages: [...previousMessages, message],
-    //   // @ts-ignore
-    //   tools: toolSet,
-    // });
+    console.log("user id sssss", userId);
+    console.log("coll id sssss", collectionId);
 
     // save the user message in db
-    console.log("messages recieved from client is", message);
-    console.log("text is", message.parts[0].type);
+    console.log("messages recieved from client is", messages);
+    console.log("last message is", messages[messages.length - 1]);
     // @ts-ignore
-    const userMessage = message.parts[0].text;
+    const userMessage = messages[messages.length - 1].parts[0].text;
     await prisma.message.create({
       data: {
         userId: userId,
         collectionId: collectionId,
-        content: JSON.stringify(userMessage),
+        content: userMessage,
         role: "USER",
       },
     });

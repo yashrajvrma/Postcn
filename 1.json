@@ -1,0 +1,81 @@
+[
+  {
+    "parts": [
+      {
+        "type": "text",
+        "text": "create a mock route that returns bikedata with name, vehicel no of 10 bike and on get endpoint"
+      }
+    ],
+    "id": "6ScL2A8xIXtaE6DQ",
+    "role": "user"
+  },
+  {
+    "id": "",
+    "role": "assistant",
+    "parts": [
+      { "type": "step-start" },
+      {
+        "type": "tool-createMockRoute",
+        "toolCallId": "call_6izPRFM54NbPT34GXZ7Taq5N",
+        "state": "output-available",
+        "input": {
+          "method": "GET",
+          "path": "/bikedata",
+          "response": [
+            { "name": "Speedster", "vehicle_no": "BKE001" },
+            { "name": "RacerX", "vehicle_no": "BKE002" },
+            { "name": "RoadRunner", "vehicle_no": "BKE003" },
+            { "name": "Thunderbolt", "vehicle_no": "BKE004" },
+            { "name": "Lightning", "vehicle_no": "BKE005" },
+            { "name": "Falcon", "vehicle_no": "BKE006" },
+            { "name": "NightRider", "vehicle_no": "BKE007" },
+            { "name": "Comet", "vehicle_no": "BKE008" },
+            { "name": "Turbo", "vehicle_no": "BKE009" },
+            { "name": "Vortex", "vehicle_no": "BKE010" }
+          ]
+        },
+        "output": {
+          "message": "Mock route created",
+          "route": {
+            "id": "1852778c-eb0d-4dba-aec2-8ab719f1a855",
+            "userId": "xaaC6vYzTtfpGg1wZdoQDQhcRIBXauvQ",
+            "collectionId": "2e900b7a-aed4-4dd7-8737-a4e43f0f9725",
+            "method": "GET",
+            "path": "/bikedata",
+            "response": [
+              { "name": "Speedster", "vehicle_no": "BKE001" },
+              { "name": "RacerX", "vehicle_no": "BKE002" },
+              { "name": "RoadRunner", "vehicle_no": "BKE003" },
+              { "name": "Thunderbolt", "vehicle_no": "BKE004" },
+              { "name": "Lightning", "vehicle_no": "BKE005" },
+              { "name": "Falcon", "vehicle_no": "BKE006" },
+              { "name": "NightRider", "vehicle_no": "BKE007" },
+              { "name": "Comet", "vehicle_no": "BKE008" },
+              { "name": "Turbo", "vehicle_no": "BKE009" },
+              { "name": "Vortex", "vehicle_no": "BKE010" }
+            ],
+            "createdAt": "2025-10-29T13:00:09.926Z",
+            "updatedAt": "2025-10-29T13:00:09.926Z",
+            "messageId": null
+          }
+        },
+        "callProviderMetadata": {
+          "openai": {
+            "itemId": "fc_05ced9c175ec47e30069020fd4b478819d91ad58c02bb4bed6"
+          }
+        }
+      },
+      { "type": "step-start" },
+      {
+        "type": "text",
+        "text": "The mock route has been successfully created.\n\n- **Endpoint:** `GET /bikedata`\n- **Response:** An array of 10 bike objects, each with `name` and `vehicle_no`.\n  \nExamples of bike objects:\n```json\n[\n  {\"name\":\"Speedster\",\"vehicle_no\":\"BKE001\"},\n  {\"name\":\"RacerX\",\"vehicle_no\":\"BKE002\"},\n  {\"name\":\"RoadRunner\",\"vehicle_no\":\"BKE003\"},\n  {\"name\":\"Thunderbolt\",\"vehicle_no\":\"BKE004\"},\n  {\"name\":\"Lightning\",\"vehicle_no\":\"BKE005\"},\n  {\"name\":\"Falcon\",\"vehicle_no\":\"BKE006\"},\n  {\"name\":\"NightRider\",\"vehicle_no\":\"BKE007\"},\n  {\"name\":\"Comet\",\"vehicle_no\":\"BKE008\"},\n  {\"name\":\"Turbo\",\"vehicle_no\":\"BKE009\"},\n  {\"name\":\"Vortex\",\"vehicle_no\":\"BKE010\"}\n]\n```\n\nIf you need any more adjustments, feel free to let me know!",
+        "providerMetadata": {
+          "openai": {
+            "itemId": "msg_05ced9c175ec47e30069020fda4638819da32314fd5e463b6b"
+          }
+        },
+        "state": "done"
+      }
+    ]
+  }
+]

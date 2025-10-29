@@ -64,10 +64,6 @@ export default function ChatBotDemo() {
   const { messages, sendMessage, status, regenerate } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
-      // only send the last message to the server:
-      prepareSendMessagesRequest({ messages, id }) {
-        return { body: { message: messages[messages.length - 1], id } };
-      },
     }),
   });
 
